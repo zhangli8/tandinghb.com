@@ -1,0 +1,425 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title> 
+
+	<!-- mobile responsive meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/responsive.css">
+	<link rel="stylesheet" href="fonts/flaticon.css" />
+	<!--引用百度地图API-->
+	<style type="text/css">
+	    .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
+	    .iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+</head>
+<body>
+	<div class="boxed_wrapper">
+		<div class="header-top">
+			<div class="container clearfix">
+				<!--Top Left-->
+				<div class="top-left pull-left">
+					<ul class="links-nav clearfix">
+						<li><a href="#"><span class="fa fa-phone"></span> 电话：18402176949(黄先生)</a></li>
+						<li><a href="#"><span class="fa fa-envelope"></span>公司热线：400 080 1981</a></li>
+					</ul>
+				</div>
+				<!--Top Right-->
+				<!--
+                    <div class="top-right pull-right">
+					<div class="social-links clearfix">
+						<a href="#"><span class="fa fa-facebook-f"></span></a>
+						<a href="#"><span class="fa fa-twitter"></span></a>
+						<a href="#"><span class="fa fa-linkedin"></span></a>
+						<a href="#"><span class="fa fa-instagram"></span></a>
+						<a href="#"><span class="fa fa-pinterest-p"></span></a>
+					</div>
+				-->
+				</div>
+			</div>
+		</div><!-- Header Top End -->
+
+		<!-- Menu -->
+		<section class="theme_menu stricky">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="main-logo">
+							<a href="index.html"><img src="images/logo/logo.png" alt=""></a>
+						</div>
+					</div>
+					<div class="col-md-5 menu-column">
+						<nav class="menuzord" id="main_menu">
+						   <ul class="menuzord-menu">
+								<li><a href="index.html">首页</a></li>
+								<li><a href="about.html">关于坦丁</a></li>
+								<li><a href="service.html">坦丁产品</a></li>
+								<li><a href="service-single.html">施工流程</a></li>									
+								<li><a href="contact.html">联系方式</a></li>
+							</ul> <!-- End of .menuzord-menu -->
+						</nav> <!-- End of #main_menu -->
+					</div>
+					<!-- <div class="col-md-2">
+						<div class="right-area">
+						   <div class="link_btn float_right">
+							   <a href="#" class="thm-btn">GET A Quote?</a>
+						   </div>
+						</div>	
+					</div> -->
+				</div>
+			</div> <!-- End of .conatiner -->
+		</section> <!-- End of .theme_menu -->
+
+		<section class="contact_details sec-padd">
+			
+				<div class="home-google-map">
+					<!-- <div 
+						class="google-map" 
+						id="contact-google-map" 
+						data-map-lat="45.631077" 
+						data-map-lng="-72.949570" 
+						data-icon-path="images/logo/map-marker.png"
+						data-map-title="Chester"
+						data-map-zoom="10" >
+					</div> -->
+
+					<!--百度地图容器-->
+					<div style="width:100%;height:500px;border:#ccc solid 1px;" id="dituContent"></div>
+
+					<script type="text/javascript">
+					    //创建和初始化地图函数：
+					    function initMap(){
+					        createMap();//创建地图
+					        setMapEvent();//设置地图事件
+					        addMapControl();//向地图添加控件
+					        addMarker();//向地图中添加marker
+					    }
+					    
+					    //创建地图函数：
+					    function createMap(){
+					        var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+					        var point = new BMap.Point(121.339286,31.484445);//定义一个中心点坐标
+					        map.centerAndZoom(point,16);//设定地图的中心点和坐标并将地图显示在地图容器中
+					        window.map = map;//将map变量存储在全局
+					    }
+					    
+					    //地图事件设置函数：
+					    function setMapEvent(){
+					        map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+					        //map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+					        map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+					        //map.enableKeyboard();//启用键盘上下左右键移动地图
+					    }
+					    
+					    //地图控件添加函数：
+					    function addMapControl(){
+					        //向地图中添加缩放控件
+						var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+						map.addControl(ctrl_nav);
+					        //向地图中添加缩略图控件
+						//var ctrl_ove = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:1});
+						//map.addControl(ctrl_ove);
+					        //向地图中添加比例尺控件
+						var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+						map.addControl(ctrl_sca);
+					    }
+					    
+					    //标注点数组
+					    var markerArr = [{title:"坦丁环保",content:"",point:"121.339232|31.484907",isOpen:0,icon:{w:36,h:36,l:0,t:0,x:6,lb:5}}
+							 ];
+					    //创建marker
+					    function addMarker(){
+					        for(var i=0;i<markerArr.length;i++){
+					            var json = markerArr[i];
+					            var p0 = json.point.split("|")[0];
+					            var p1 = json.point.split("|")[1];
+					            var point = new BMap.Point(p0,p1);
+								var iconImg = createIcon(json.icon);
+					            var marker = new BMap.Marker(point,{icon:iconImg});
+								var iw = createInfoWindow(i);
+								var label = new BMap.Label(json.title,{"offset":new BMap.Size(json.icon.lb-json.icon.x+30,-20)});
+								marker.setLabel(label);
+					            map.addOverlay(marker);
+					            label.setStyle({
+					                        borderColor:"#808080",
+					                        color:"#333",
+					                        cursor:"pointer"
+					            });
+								
+								(function(){
+									var index = i;
+									var _iw = createInfoWindow(i);
+									var _marker = marker;
+									_marker.addEventListener("click",function(){
+									    this.openInfoWindow(_iw);
+								    });
+								    _iw.addEventListener("open",function(){
+									    _marker.getLabel().hide();
+								    })
+								    _iw.addEventListener("close",function(){
+									    _marker.getLabel().show();
+								    })
+									label.addEventListener("click",function(){
+									    _marker.openInfoWindow(_iw);
+								    })
+									if(!!json.isOpen){
+										label.hide();
+										_marker.openInfoWindow(_iw);
+									}
+								})()
+					        }
+					    }
+					    //创建InfoWindow
+					    function createInfoWindow(i){
+					        var json = markerArr[i];
+					        var iw = new BMap.InfoWindow("<b class='iw_poi_title' title='" + json.title + "'>" + json.title + "</b><div class='iw_poi_content'>"+json.content+"</div>");
+					        return iw;
+					    }
+					    //创建一个Icon
+					    function createIcon(json){
+					        var icon = new BMap.Icon("images/location.png", new BMap.Size(json.w,json.h),{imageOffset: new BMap.Size(-json.l,-json.t),infoWindowOffset:new BMap.Size(json.lb+5,1),offset:new BMap.Size(json.x,json.h)})
+					        return icon;
+					    }
+					    
+					    initMap();//创建和初始化地图
+					</script>
+				</div>			
+		</section>
+		
+		<section class="feature-style-three">
+			<div class="container">			
+				<div class="item-list">
+					<div class="row">
+						<div class="item">
+							<div class="column col-md-4 col-sm-6 col-xs-12">
+								<div class="inner-box">
+									<div class="icon-box"><span class="icon flaticon-pin-1"></span></div>
+									<h3>公司地址</h3>
+									<div class="text"><p>上海市宝山区陈川路555弄203号602室（宝虹家园）</p></div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="item">
+							<div class="column col-md-4 col-sm-6 col-xs-12">
+								<div class="inner-box">
+									<div class="icon-box"><span class="icon flaticon-cell-phone"></span></div>
+									<h3>业务电话</h3>
+									<div class="text"><p>18402176949 <br>400-080-1981 </p></div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="item">
+							<div class="column col-md-4 col-sm-6 col-xs-12">
+								<div class="inner-box">
+									<div class="icon-box"><span class="icon flaticon-message"></span></div>
+									<h3>电子邮件</h3>
+									<div class="text"><p>380806201@qq.com</p></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- <section class="contact_us">
+			<div class="container">   
+                <div class="sec-title text-center">
+                    <h2>Get In <span>Touch</span></h2>
+					<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Perspiciatis unde omnis iste natus error sit.</p>
+                </div>
+                <div class="default-form-area">
+					<form id="contact-form" name="contact_form" class="default-form" action="inc/sendmail.php" method="post">
+						<div class="row clearfix">
+							<div class="col-md-6 col-sm-6 col-xs-12">
+												
+								<div class="form-group style-two">
+									<input type="text" name="form_name" class="form-control" value="" placeholder="Name" required="">
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="form-group style-two">
+									<input type="email" name="form_email" class="form-control required email" value="" placeholder="Email" required="">
+								</div>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="form-group style-two">
+									<input type="text" name="form_phone" class="form-control" value="" placeholder="Phone">
+								</div>
+							</div>	
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="form-group style-two">
+									<textarea name="form_message" class="form-control textarea required" placeholder="Your Message"></textarea>
+								</div>
+							</div>   											  
+						</div>
+						<div class="contact-section-btn text-center">
+							<div class="form-group style-two">
+								<input id="form_botcheck" name="form_botcheck" class="form-control" type="hidden" value="">
+								<button class="thm-btn thm-color" type="submit" data-loading-text="Please wait...">send message</button>
+							</div>
+						</div> 
+					</form>
+				</div>          
+			</div>
+		</section> -->
+
+		<footer class="footer bg-style" style="background-image:url(images/background/bg-3.jpg);">
+			<div class="container">
+				<div class="footer-upper">
+				
+					<div class="row">
+						<div class="col-md-6 col-sm-6">
+							<div class="footer-widget about-widget">
+								<a href="#">
+									<img src="images/logo/logo2.png" alt="Awesome Image" />
+								</a>
+								<p>上海坦丁环保科技有限公司是一家专业从事研究和生产纳米高效光触媒、分解酶的环保型企业。专注于检测和治理室内、车内空气污染，可快速去除甲醛、苯、氨、TVOC等有毒、有害气体。</p>
+								<div class="link_btn">
+								   <a href="contact.html" class="button-style-one">联系我们</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3 col-sm-6">
+							<div class="footer-widget quick-links">
+								<h3 class="title">微信</h3>
+								<a href="#">
+									<img class="img-responsive" src="images/code/2dcode.png" alt="">
+								</a>
+								<p>在微信中扫一扫，<br>或是长按图片识别二维码</p>
+							</div>
+
+						</div>
+						<div class="col-md-3 col-sm-6">
+							<div class="footer-widget opening-hour">
+								<h3 class="title">产品招商</h3>
+								<p>您的选择是对我们最好的肯定，<br>全程技术指导，传授运营和销售模式。</p>
+								
+								<ul class="day-time">
+									<li><span>招商热线：</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;400 080 1981</span></li>
+									<li><span>招商热线：</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;18402176949</span></li>
+									<li><span>招商负责：</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;黄先生</span></li>
+								</ul>
+							</div>
+						</div>
+						<!-- <div class="col-md-4 col-sm-6">
+							<div class="footer-widget contact-widget">
+								<h3 class="title">Leave Message</h3>
+								 <div class="default-form-area">
+									<form id="contact-form" name="contact_form" class="default-form" action="inc/sendmail.php" method="post">
+										<div class="row-10 clearfix">
+											<div class="column col-md-6 col-sm-6 col-xs-12">
+												<div class="form-group">
+													<input type="text" name="form_name" class="form-control" value="" placeholder="Your Name" required="">
+												</div>
+											</div>
+											
+											<div class="column col-md-6 col-sm-6 col-xs-12">
+												<div class="form-group">
+													<input type="text" name="form_phone" class="form-control" value="" placeholder="Phone Number">
+												</div>
+											</div>
+											
+											<div class="column col-md-12 col-sm-12 col-xs-12">
+												<div class="form-group">
+													<textarea name="form_message" class="form-control textarea required" placeholder="Message"></textarea>
+												</div>
+											</div>   
+											<div class="column col-md-12 col-sm-12 col-xs-12">
+												<div class="form-group">
+													<input id="form_botcheck" name="form_botcheck" class="form-control" type="hidden" value="">
+													<button class="thm-btn thm-color" type="submit" data-loading-text="Please wait...">Contac Now</button>
+												</div>
+											</div>   
+
+										</div>
+									</form>
+								</div>
+							</div>
+						</div> -->
+					</div>
+				</div>
+				<!--Footer Bottom-->
+				<div class="footer-bottom">					
+					<div class="pull-left">
+						<div class="copyright-text">Copyright &copy; 2018. 上海坦丁环保科技有限公司</div>
+						
+						<!--<div class="social-links pull-right">
+							<a href="#"><span class="fa fa-facebook-f"></span></a>
+							<a href="#"><span class="fa fa-twitter"></span></a>
+							<a href="#"><span class="fa fa-linkedin"></span></a>
+							<a href="#"><span class="fa fa-instagram"></span></a>
+							<a href="#"><span class="fa fa-pinterest-p"></span></a>							
+						</div>-->
+					</div>			         
+				</div> 
+			</div>
+		</footer>
+
+
+<!-- Scroll Top Button -->
+	<button class="scroll-top tran3s color2_bg">
+		<span class="fa fa-angle-up"></span>
+	</button>
+	<!-- pre loader  -->
+	<div class="preloader"></div>
+
+
+	<!-- jQuery js -->
+	<script src="js/jquery.js"></script>
+	<!-- bootstrap js -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- jQuery ui js -->
+	<script src="js/jquery-ui.js"></script>
+	<!-- owl carousel js -->
+	<script src="js/owl.carousel.min.js"></script>
+	<!-- jQuery validation -->
+	<script src="js/jquery.validate.min.js"></script>
+	<!-- google map -->
+	<script src="http://ditu.google.cn/maps/api/js?key=AIzaSyCRvBPo3-t31YFk588DpMYS6EqKf-oGBSI"></script> 
+	<script src="js/gmap.js"></script>
+	<!-- mixit up -->
+	<script src="js/wow.js"></script>
+	<script src="js/jquery.mixitup.min.js"></script>
+	<script src="js/jquery.fitvids.js"></script>
+    <script src="js/bootstrap-select.min.js"></script>
+	<script src="js/menuzord.js"></script>
+
+	<!-- revolution slider js -->
+	<script src="assets/revolution/js/jquery.themepunch.tools.min.js"></script>
+	<script src="assets/revolution/js/jquery.themepunch.revolution.min.js"></script>
+	<script src="assets/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+	<script src="assets/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+	<script src="assets/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+	<script src="assets/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+	<script src="assets/revolution/js/extensions/revolution.extension.migration.min.js"></script>
+	<script src="assets/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+	<script src="assets/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+	<script src="assets/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+	<script src="assets/revolution/js/extensions/revolution.extension.video.min.js"></script>
+
+	<!-- fancy box -->
+	<script src="js/jquery.fancybox.pack.js"></script>
+	<script src="js/jquery.polyglot.language.switcher.js"></script>
+	<script src="js/nouislider.js"></script>
+	<script src="js/jquery.bootstrap-touchspin.js"></script>
+    <script src="js/SmoothScroll.js"></script>
+	<script src="js/validation.js"></script>
+	<script src="js/jquery.appear.js"></script>
+	<script src="js/jquery.countTo.js"></script>
+	<script src="js/jquery.flexslider.js"></script>
+	<script src="js/imagezoom.js"></script>	
+	<script src="js/validation.js"></script>
+	<script id="map-script" src="js/default-map.js"></script>
+	<script src="js/custom.js"></script>
+
+</div>
+	
+</body>
+</html>
